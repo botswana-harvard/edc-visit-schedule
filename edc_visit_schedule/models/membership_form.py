@@ -12,9 +12,7 @@ class MembershipForm(BaseUuidModel):
     """Model to list forms to be linked to a Schedule as
     "registration" forms to that group"""
 
-    content_type_map = models.OneToOneField(
-        ContentTypeMap,
-        related_name='+')
+    content_type_map = models.ForeignKey(ContentTypeMap, unique=False)
 
     category = models.CharField(
         max_length=35,
@@ -52,10 +50,10 @@ class MembershipForm(BaseUuidModel):
         super(MembershipForm, self).save(*args, **kwargs)
 
     def natural_key(self):
-        return self.content_type_map.natural_key()
+        return (self.content_type_map.natural_key(), self.category)
 
     def __unicode__(self):
-        return self.content_type_map.name
+        return (self.content_type_map.name, self.category)
 
     class Meta:
         app_label = "edc_visit_schedule"

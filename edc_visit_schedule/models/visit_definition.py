@@ -17,10 +17,9 @@ class VisitDefinition(BaseWindowPeriodItem):
     """Model to define a visit code, title, windows, schedule, etc."""
 
     code = models.CharField(
+        verbose_name="Title",
         max_length=6,
-        validators=[MaxLengthValidator(6)],
-        db_index=True,
-        unique=True)
+        db_index=True)
 
     title = models.CharField(
         verbose_name="Title",
@@ -47,7 +46,7 @@ class VisitDefinition(BaseWindowPeriodItem):
     objects = VisitDefinitionManager()
 
     def natural_key(self):
-        return (self.code, )
+        return (self.code, self.title)
 
     def get_lower_window_datetime(self, appt_datetime):
         if not appt_datetime:
@@ -69,3 +68,4 @@ class VisitDefinition(BaseWindowPeriodItem):
     class Meta:
         ordering = ['code', 'time_point']
         app_label = "edc_visit_schedule"
+        unique_together = (('title', 'code'))

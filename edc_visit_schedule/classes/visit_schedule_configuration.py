@@ -143,7 +143,7 @@ class VisitScheduleConfiguration(object):
                 content_type_map = self.get_content_type_map(
                     membership_form.model._meta.app_label,
                     membership_form.model._meta.model_name)
-                MembershipForm.objects.filter(content_type_map=content_type_map).delete()
+#                 MembershipForm.objects.filter(content_type_map=content_type_map).delete()
                 MembershipForm.objects.create(
                     category=membership_form.name,
                     app_label=membership_form.model._meta.app_label,
@@ -188,7 +188,8 @@ class VisitScheduleConfiguration(object):
                     'Add it to \'scheduled_groups\' or correct the visit definition.'.format(
                         visit_definition.get('schedule')))
             try:
-                visit_definition_instance = VisitDefinition.objects.get(code=code)
+                visit_definition_instance = VisitDefinition.objects.get(
+                    code=code, title=visit_definition.get('title'))
                 visit_definition_instance.code = code
                 visit_definition_instance.title = visit_definition.get('title')
                 visit_definition_instance.time_point = visit_definition.get('time_point')
