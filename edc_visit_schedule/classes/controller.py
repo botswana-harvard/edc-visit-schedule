@@ -29,7 +29,6 @@ class Controller(object):
     def set_registry(self, visit_schedule_configuration):
         if not issubclass(visit_schedule_configuration, VisitScheduleConfiguration):
             raise AlreadyRegistered('Expected an instance of VisitScheduleConfiguration.')
-        print(visit_schedule_configuration.name, 'visit_schedule_configuration.name ____________________+++++++++++++++++++++++++++++')
         if visit_schedule_configuration.name not in self._registry:
             # register the instance
             self._registry.update({visit_schedule_configuration.name: visit_schedule_configuration()})
