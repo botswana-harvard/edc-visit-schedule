@@ -46,7 +46,7 @@ class VisitDefinition(BaseWindowPeriodItem):
     objects = VisitDefinitionManager()
 
     def natural_key(self):
-        return (self.code, self.title)
+        return (self.code, self.title, self.instruction)
 
     def get_lower_window_datetime(self, appt_datetime):
         if not appt_datetime:
@@ -63,9 +63,9 @@ class VisitDefinition(BaseWindowPeriodItem):
         return appt_datetime + td
 
     def __str__(self):
-        return '{0}: {1}'.format(self.code, self.title)
+        return '{0}: {1}: {2}'.format(self.code, self.title, self.instruction)
 
     class Meta:
         ordering = ['code', 'time_point']
         app_label = "edc_visit_schedule"
-        unique_together = (('title', 'code'))
+        unique_together = (('title', 'code', 'instruction'))

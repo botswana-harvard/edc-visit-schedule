@@ -189,7 +189,7 @@ class VisitScheduleConfiguration(object):
                         visit_definition.get('schedule')))
             try:
                 visit_definition_instance = VisitDefinition.objects.get(
-                    code=code, title=visit_definition.get('title'))
+                    code=code, title=visit_definition.get('title'), instruction=visit_definition.get('instructions'))
                 visit_definition_instance.code = code
                 visit_definition_instance.title = visit_definition.get('title')
                 visit_definition_instance.time_point = visit_definition.get('time_point')
