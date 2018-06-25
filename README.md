@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop)](https://travis-ci.org/clinicedc/edc-visit-schedule)
+[![Coverage Status](https://coveralls.io/repos/clinicedc/edc-visit-schedule/badge.svg)](https://coveralls.io/r/clinicedc/edc-visit-schedule)
+
+
 # edc-visit-schedule
 
 Add data collection schedules to your app.
@@ -6,7 +10,7 @@ Add data collection schedules to your app.
 
 Get the latest version:
 
-    pip install git+https://github.com/botswana-harvard/edc-visit-schedule@develop#egg=edc_visit_schedule
+    pip install git+https://github.com/clinicedc/edc-visit-schedule@develop#egg=edc_visit_schedule
 
 Add to settings:
 
