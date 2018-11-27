@@ -81,6 +81,7 @@ class SubjectSchedule:
         of the onschedule_model, if it does not already exist,
         and updating the history_obj.
         """
+
         if onschedule_model_obj:
             subject_identifier = onschedule_model_obj.subject_identifier
             onschedule_datetime = onschedule_model_obj.onschedule_datetime

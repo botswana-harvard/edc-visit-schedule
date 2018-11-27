@@ -94,8 +94,8 @@ class Schedule:
         off of a schedule.
         """
         if not self._subject:
-            visit_schedule, schedule = site_visit_schedules.get_by_onschedule_model(
-                self.onschedule_model)
+            visit_schedule, schedule = site_visit_schedules.get_by_onschedule_model_schedule_name(
+                self.onschedule_model, name=self.name)
             if schedule.name != self.name:
                 raise ValueError(
                     f'Site visit schedules return the wrong schedule object. '
