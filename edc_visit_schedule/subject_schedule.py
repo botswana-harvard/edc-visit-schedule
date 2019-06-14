@@ -1,11 +1,11 @@
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from edc_appointment.constants import IN_PROGRESS_APPT, COMPLETE_APPT
 from edc_appointment.creators import AppointmentsCreator
 from edc_base.utils import get_utcnow, convert_php_dateformat
 
 from .constants import OFF_SCHEDULE, ON_SCHEDULE
-from edc_appointment.constants import IN_PROGRESS_APPT, COMPLETE_APPT
 
 
 class SubjectScheduleError(Exception):
@@ -74,7 +74,7 @@ class SubjectSchedule:
         return self.appointment_model_cls.visit_model_cls()
 
     def put_on_schedule(self, onschedule_model_obj=None, subject_identifier=None,
-                        onschedule_datetime=None):
+                        onschedule_datetime=None, schedule_name=None):
         """Puts a subject on-schedule.
 
         A person is put on schedule by creating an instance
@@ -88,8 +88,13 @@ class SubjectSchedule:
         else:
             onschedule_datetime = onschedule_datetime or get_utcnow()
         try:
-            self.onschedule_model_cls.objects.get(
-                subject_identifier=subject_identifier)
+            if schedule_name:
+                self.onschedule_model_cls.objects.get(
+                    subject_identifier=subject_identifier,
+                    schedule_name=schedule_name)
+            else:
+                self.onschedule_model_cls.objects.get(
+                    subject_identifier=subject_identifier)
         except ObjectDoesNotExist:
             self.registered_or_raise(subject_identifier=subject_identifier)
             self.consented_or_raise(subject_identifier=subject_identifier)

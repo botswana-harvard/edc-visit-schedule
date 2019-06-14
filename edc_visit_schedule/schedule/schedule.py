@@ -106,13 +106,14 @@ class Schedule:
         return self._subject
 
     def put_on_schedule(self, onschedule_model_obj=None,
-                        subject_identifier=None, onschedule_datetime=None):
+                        subject_identifier=None, onschedule_datetime=None, schedule_name=None):
         """Wrapper method to puts a subject onto this schedule.
         """
         self.subject.put_on_schedule(
             onschedule_model_obj=onschedule_model_obj,
             subject_identifier=subject_identifier,
-            onschedule_datetime=onschedule_datetime)
+            onschedule_datetime=onschedule_datetime,
+            schedule_name=schedule_name)
 
     def refresh_schedule(self, subject_identifier=None):
         """Resaves the onschedule model to, for example, refresh
