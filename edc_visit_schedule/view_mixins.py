@@ -1,8 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.base import ContextMixin
-from edc_base.utils import get_utcnow
 
 from .site_visit_schedules import site_visit_schedules
+from edc_base.utils import get_utcnow
 
 
 class VisitScheduleViewMixin(ContextMixin):
@@ -19,9 +19,9 @@ class VisitScheduleViewMixin(ContextMixin):
         context = super().get_context_data(**kwargs)
         for visit_schedule in site_visit_schedules.visit_schedules.values():
             for schedule in visit_schedule.schedules.values():
-#                 if not self.current_schedule:
-#                     self.current_schedule = schedule
-#                     self.current_visit_schedule = visit_schedule
+                if not self.current_schedule:
+                    self.current_schedule = schedule
+                    self.current_visit_schedule = visit_schedule
                 try:
                     onschedule_model_obj = schedule.onschedule_model_cls.objects.get(
                         subject_identifier=self.subject_identifier)
