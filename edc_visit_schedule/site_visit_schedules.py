@@ -4,7 +4,6 @@ import sys
 from django.apps import apps as django_apps
 from django.utils.module_loading import import_module, module_has_submodule
 
-
 class RegistryNotLoaded(Exception):
     pass
 
@@ -92,6 +91,20 @@ class SiteVisitSchedules:
         for visit_schedule in self.visit_schedules.values():
             for schedule in visit_schedule.schedules.values():
                 if schedule.onschedule_model == onschedule_model:
+                    return visit_schedule, schedule
+        raise SiteVisitScheduleError(
+            f'Schedule not found. No schedule exists for '
+            f'onschedule_model={onschedule_model}.')
+        return None
+
+    def get_by_onschedule_model_schedule_name(self, onschedule_model=None, name=None):
+        """Returns a tuple of visit_schedule, schedule
+        for the given onschedule model and schedule name.
+        """
+        schedule = None
+        for visit_schedule in self.visit_schedules.values():
+            for schedule in visit_schedule.schedules.values():
+                if schedule.onschedule_model == onschedule_model and schedule.name == name:
                     return visit_schedule, schedule
         raise SiteVisitScheduleError(
             f'Schedule not found. No schedule exists for '
