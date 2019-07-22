@@ -235,12 +235,18 @@ class SubjectSchedule:
             obj.appt_status = COMPLETE_APPT
             obj.save()
 
-    def resave(self, subject_identifier=None):
+    def resave(self, subject_identifier=None, schedule_name=None):
         """Resaves the onschedule model instance to trigger, for example,
         appointment creation (if using edc_appointment mixin).
         """
-        obj = self.onschedule_model_cls.objects.get(
-            subject_identifier=subject_identifier)
+        obj = None
+        if schedule_name:
+            obj = self.onschedule_model_cls.objects.get(
+                subject_identifier=subject_identifier,
+                schedule_name=schedule_name)
+        else:
+            obj = self.onschedule_model_cls.objects.get(
+                subject_identifier=subject_identifier)
         obj.save()
 
     def registered_or_raise(self, subject_identifier=None):
