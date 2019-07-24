@@ -1,6 +1,5 @@
-import re
-
 from django.core.management.color import color_style
+import re
 
 from ..site_visit_schedules import site_visit_schedules, SiteVisitScheduleError
 from ..subject_schedule import NotOnScheduleForDateError, NotOnScheduleError
@@ -115,11 +114,12 @@ class Schedule:
             onschedule_datetime=onschedule_datetime,
             schedule_name=schedule_name)
 
-    def refresh_schedule(self, subject_identifier=None):
+    def refresh_schedule(self, subject_identifier=None, schedule_name=None):
         """Resaves the onschedule model to, for example, refresh
         appointments.
         """
-        self.subject.resave(subject_identifier=subject_identifier)
+        self.subject.resave(subject_identifier=subject_identifier,
+                                schedule_name=schedule_name)
 
     def take_off_schedule(self, offschedule_model_obj=None,
                           offschedule_datetime=None, subject_identifier=None):
