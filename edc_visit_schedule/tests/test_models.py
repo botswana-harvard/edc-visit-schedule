@@ -90,7 +90,7 @@ class TestModels(SiteTestCaseMixin, TestCase):
         """
         OnSchedule.objects.create(
             subject_identifier='1234',
-            onschedule_datetime=datetime(2017, 12, 1, 0, 0, 0, 0, pytz.utc))
+            onschedule_datetime=datetime(2019, 12, 1, 0, 0, 0, 0, pytz.utc))
         self.assertEqual(Appointment.objects.all().count(), 4)
         appointment = Appointment.objects.all().order_by('appt_datetime').first()
         subject_visit = SubjectVisit.objects.create(
