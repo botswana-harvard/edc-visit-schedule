@@ -100,13 +100,15 @@ class SubjectSchedule:
             self.consented_or_raise(subject_identifier=subject_identifier)
             self.onschedule_model_cls.objects.create(
                 subject_identifier=subject_identifier,
-                onschedule_datetime=onschedule_datetime)
+                onschedule_datetime=onschedule_datetime,
+                schedule_name=schedule_name or self.schedule_name)
         try:
             history_obj = self.history_model_cls.objects.get(
                 subject_identifier=subject_identifier,
                 schedule_name=self.schedule_name,
                 visit_schedule_name=self.visit_schedule_name)
         except ObjectDoesNotExist:
+            
             history_obj = self.history_model_cls.objects.create(
                 subject_identifier=subject_identifier,
                 onschedule_model=self.onschedule_model,
