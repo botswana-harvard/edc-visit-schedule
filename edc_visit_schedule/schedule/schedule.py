@@ -104,7 +104,7 @@ class Schedule:
                 visit_schedule=visit_schedule, schedule=self)
         return self._subject
 
-    def put_on_schedule(self, onschedule_model_obj=None,
+    def put_on_schedule(self, onschedule_model_obj=None, base_appt_datetime=None,
                         subject_identifier=None, onschedule_datetime=None, schedule_name=None):
         """Wrapper method to puts a subject onto this schedule.
         """
@@ -112,6 +112,7 @@ class Schedule:
             onschedule_model_obj=onschedule_model_obj,
             subject_identifier=subject_identifier,
             onschedule_datetime=onschedule_datetime,
+            base_appt_datetime=base_appt_datetime,
             schedule_name=schedule_name)
 
     def refresh_schedule(self, subject_identifier=None, schedule_name=None):

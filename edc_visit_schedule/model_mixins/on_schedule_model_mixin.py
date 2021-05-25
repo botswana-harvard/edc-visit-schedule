@@ -15,12 +15,11 @@ class OnScheduleModelMixin(ScheduleModelMixin):
             datetime_not_before_study_start,
             datetime_not_future],
         default=get_utcnow)
-    
+
     schedule_name = models.CharField(
         max_length=25,
         null=True,
         blank=True)
-
 
     def save(self, *args, **kwargs):
         self.report_datetime = self.onschedule_datetime

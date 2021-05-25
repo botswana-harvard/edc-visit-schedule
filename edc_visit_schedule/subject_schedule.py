@@ -74,7 +74,7 @@ class SubjectSchedule:
         return self.appointment_model_cls.visit_model_cls()
 
     def put_on_schedule(self, onschedule_model_obj=None, subject_identifier=None,
-                        onschedule_datetime=None, schedule_name=None):
+                        onschedule_datetime=None, schedule_name=None, base_appt_datetime=None):
         """Puts a subject on-schedule.
 
         A person is put on schedule by creating an instance
@@ -108,7 +108,7 @@ class SubjectSchedule:
                 schedule_name=self.schedule_name,
                 visit_schedule_name=self.visit_schedule_name)
         except ObjectDoesNotExist:
-            
+
             history_obj = self.history_model_cls.objects.create(
                 subject_identifier=subject_identifier,
                 onschedule_model=self.onschedule_model,
@@ -125,7 +125,7 @@ class SubjectSchedule:
                 schedule=self.schedule,
                 visit_schedule=self.visit_schedule,
                 appointment_model=self.appointment_model)
-            creator.create_appointments(onschedule_datetime)
+            creator.create_appointments(base_appt_datetime or onschedule_datetime)
 
     def take_off_schedule(self, offschedule_model_obj=None, subject_identifier=None,
                           offschedule_datetime=None):
