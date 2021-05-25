@@ -32,7 +32,6 @@ class VisitScheduleViewMixin(ContextMixin):
                     onschedule_model_obj=onschedule_model_obj,
                     schedule=schedule, visit_schedule=visit_schedule,
                     is_onschedule=is_onschedule)
-
         context.update(
             visit_schedules=self.visit_schedules,
             current_onschedule_model=self.current_onschedule_model,
