@@ -2,10 +2,12 @@ import sys
 
 from django.apps.config import AppConfig as DjangoAppConfig
 from django.conf import settings
-from django.core.management.color import color_style
 from django.core.checks import register
+from django.core.management.color import color_style
+
 from .site_visit_schedules import site_visit_schedules
 from .system_checks import visit_schedule_check
+
 
 style = color_style()
 
@@ -13,6 +15,7 @@ style = color_style()
 class AppConfig(DjangoAppConfig):
     name = 'edc_visit_schedule'
     verbose_name = "Visit Schedules"
+    app_label = 'edc_visit_schedule'
     validate_models = True
 
     def ready(self):
