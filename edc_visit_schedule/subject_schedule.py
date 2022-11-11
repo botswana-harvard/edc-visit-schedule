@@ -1,9 +1,10 @@
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from edc_base.utils import get_utcnow, convert_php_dateformat
+
 from edc_appointment.constants import IN_PROGRESS_APPT, COMPLETE_APPT
 from edc_appointment.creators import AppointmentsCreator
-from edc_base.utils import get_utcnow, convert_php_dateformat
 
 from .constants import OFF_SCHEDULE, ON_SCHEDULE
 
@@ -127,7 +128,7 @@ class SubjectSchedule:
             creator.create_appointments(base_appt_datetime or onschedule_datetime)
 
     def take_off_schedule(self, offschedule_model_obj=None, subject_identifier=None,
-                          offschedule_datetime=None):
+                          schedule_name=None, offschedule_datetime=None):
         """Takes a subject off-schedule.
 
         A person is taken off-schedule by creating an instance
@@ -137,13 +138,26 @@ class SubjectSchedule:
         # create offschedule_model_obj if it does not exist
         if not offschedule_model_obj:
             offschedule_datetime = offschedule_datetime or get_utcnow()
-            try:
-                offschedule_model_obj = self.offschedule_model_cls.objects.get(
-                    subject_identifier=subject_identifier)
-            except ObjectDoesNotExist:
-                offschedule_model_obj = self.offschedule_model_cls.objects.create(
-                    subject_identifier=subject_identifier,
-                    offschedule_datetime=offschedule_datetime)
+
+            if schedule_name:
+                try:
+                    offschedule_model_obj = self.offschedule_model_cls.objects.get(
+                        subject_identifier=subject_identifier,
+                        schedule_name=schedule_name)
+                except ObjectDoesNotExist:
+                    offschedule_model_obj = self.offschedule_model_cls.objects.create(
+                        subject_identifier=subject_identifier,
+                        offschedule_datetime=offschedule_datetime,
+                        schedule_name=schedule_name)
+            else:
+                try:
+
+                    offschedule_model_obj = self.offschedule_model_cls.objects.get(
+                        subject_identifier=subject_identifier)
+                except ObjectDoesNotExist:
+                    offschedule_model_obj = self.offschedule_model_cls.objects.create(
+                        subject_identifier=subject_identifier,
+                        offschedule_datetime=offschedule_datetime)
 
         subject_identifier = offschedule_model_obj.subject_identifier
         offschedule_datetime = offschedule_model_obj.offschedule_datetime

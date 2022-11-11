@@ -1,5 +1,6 @@
-from django.core.management.color import color_style
 import re
+
+from django.core.management.color import color_style
 
 from ..site_visit_schedules import site_visit_schedules, SiteVisitScheduleError
 from ..subject_schedule import NotOnScheduleForDateError, NotOnScheduleError
@@ -120,14 +121,15 @@ class Schedule:
         appointments.
         """
         self.subject.resave(subject_identifier=subject_identifier,
-                                schedule_name=schedule_name)
+                            schedule_name=schedule_name)
 
-    def take_off_schedule(self, offschedule_model_obj=None,
-                          offschedule_datetime=None, subject_identifier=None):
+    def take_off_schedule(self, offschedule_model_obj=None, offschedule_datetime=None,
+                          subject_identifier=None, schedule_name=None):
         self.subject.take_off_schedule(
             offschedule_model_obj=offschedule_model_obj,
             subject_identifier=subject_identifier,
-            offschedule_datetime=offschedule_datetime)
+            offschedule_datetime=offschedule_datetime,
+            schedule_name=schedule_name)
 
     def is_onschedule(self, subject_identifier=None, report_datetime=None):
         try:
